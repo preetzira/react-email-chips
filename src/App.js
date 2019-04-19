@@ -18,17 +18,27 @@ class App extends Component {
     })
   }
 
-  handleKeyDown = e => {
-    if(['Enter','Tab',','].includes(e.key)){
-      e.preventDefault();
-      let email = this.state.value.trim();
-      if (email && this.isValid(email)) {
-        this.setState({
-          emails:[...this.state.emails,email],
-          value:"",
-          error:null
-        })
+  handleEvent = (event,eventType) => {
+    let email = this.state.value.trim();
+    if(eventType === 'blur'){
+      this.handleState(email);
+    }
+    if(eventType === 'keydown'){
+      if(['Enter','Tab',','].includes(event.key)){
+        event.preventDefault();
+        let email = this.state.value.trim();
+        this.handleState(email);
       }
+    }
+  }
+
+  handleState = email => {
+    if (email && this.isValid(email)) {
+      this.setState({
+        emails:[...this.state.emails,email],
+        value:"",
+        error:null
+      })
     }
   }
 
@@ -64,8 +74,8 @@ class App extends Component {
 
   render() {
     return (
-      <React.Fragment>
-        <div className="w-50 mt-5 ml-auto mr-auto">
+      <div className="card pt-5 pb-4 pl-4 pr-4 w-50 ml-auto mr-auto mt-5">
+        <div>
           {this.state.emails.map((email,index) => (
               <div key={index} className="custom-email-badge mr-2">
                 {email}
@@ -78,12 +88,13 @@ class App extends Component {
           placeholder="Type or paste email addresses and press `Enter`"
           value={this.state.value}
           onChange={this.handleChange}
-          onKeyDown={this.handleKeyDown}
-          className={'form-control br-4 w-50 ml-auto mr-auto mt-2' + (this.state.error && ' is-invalid')}
+          onBlur={(e)=>this.handleEvent(e,'blur')}
+          onKeyDown={(e)=>this.handleEvent(e,'keydown')}
+          className={'form-control br-4mt-2' + (this.state.error && ' is-invalid')}
         />
         {this.state.error &&
-        <p className={'w-50 ml-auto mr-auto' + (this.state.error && ' text-danger')}>{this.state.error}</p>}
-      </React.Fragment>
+        <p className={(this.state.error && ' text-danger')}>{this.state.error}</p>}
+      </div>
     );
   }
 }
