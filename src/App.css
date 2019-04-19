@@ -1,0 +1,31 @@
+.custom-email-badge{
+  font-size: 15px;
+  font-weight: light!important;
+  padding: 4px 4px 4px 15px;
+  display: inline-block;
+  background: lightgrey;
+  border-radius: 20px;
+  margin:5px 2px;
+  user-select: none;
+}
+
+.custom-delete-badge{
+  display: inline-block;
+  cursor: pointer;
+  border:none;
+  background: #fff;
+  color:#000;
+  border-radius: 50px;
+  line-height: 0;
+  padding:12px 7.5px;
+  font-weight: bolder!important;
+}
+
+.custom-delete-badge:hover{
+  background: #cc0000;
+  color:#fff;
+}
+
+.custom-delete-badge:focus{
+  outline:none;
+}
