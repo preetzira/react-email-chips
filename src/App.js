@@ -42,9 +42,17 @@ class App extends Component {
     }
   }
 
+  handleEdit = indexOfEmailToBeEdited => {
+    this.setState({
+      value : this.state.emails[indexOfEmailToBeEdited],
+      emails : this.state.emails.filter((email,index) => index !== indexOfEmailToBeEdited)
+    })
+  }
+
   handleDelete = indexOfEmailToBeDeleted => {
     this.setState({
-      emails : this.state.emails.filter((email,index) => index !== indexOfEmailToBeDeleted)
+        emails : this.state.emails.filter((email,index) => index !== indexOfEmailToBeDeleted),
+        value : ""
     })
   }
 
@@ -77,9 +85,9 @@ class App extends Component {
       <div className="card pt-5 pb-4 pl-4 pr-4 w-50 ml-auto mr-auto mt-5">
         <div>
           {this.state.emails.map((email,index) => (
-              <div key={index} className="custom-email-badge mr-2">
+              <div key={index} className="custom-email-badge mr-2" onClick={()=>this.handleEdit(index)}>
                 {email}
-                <button className="ml-2 custom-delete-badge" onClick={()=>this.handleDelete(index)}>&times;</button>
+                <button className="ml-2 custom-delete-badge" onClick={(e)=>{e.stopPropagation();this.handleDelete(index)}}>&times;</button>
               </div>
             )
           )}
